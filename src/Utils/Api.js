@@ -7,3 +7,6 @@ export const YOUTUBE_API =
 export const YOUTUBE_COMMENTS =
   "https://youtube.googleapis.com/youtube/v3/comments?part=snippet&parentId=UgzDE2tasfmrYLyNkGt4AaABAg&key=" +
   GOOGLE_API_KEY;
+
+export const YOUTUBE_SEARCH_API =
+  "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
