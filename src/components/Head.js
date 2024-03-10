@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../Utils/AppSlice";
 import { YOUTUBE_SEARCH_API } from "../Utils/Api";
+import { cacheResults } from "../Utils/SearchResultSlice";
 
 const Head = () => {
   const dispatch = useDispatch();
@@ -12,9 +13,16 @@ const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const cacheSearch = useSelector((store) => store.searchResults);
 
   useEffect(() => {
-    const timer = setTimeout(() => getSearchSuggestions(), 200);
+    const timer = setTimeout(() => {
+      if (cacheSearch[searchQuery]) {
+        setShowSuggestions(cacheSearch[searchQuery]);
+      } else {
+        getSearchSuggestions();
+      }
+    }, 200);
     return () => {
       clearTimeout(timer);
     };
@@ -24,11 +32,17 @@ const Head = () => {
     const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     const json = await data.json();
     setSuggestions(json[1]);
+
+    dispatch(
+      cacheResults({
+        [searchQuery]: json[1], 
+      })
+    );
   };
 
   return (
-    <div className="grid grid-flow-col p-5 m-2 shadow-lg">
-      <div className="flex col-span-1">
+    <div className="flex justify-between p-2 m-2">
+      <div className="flex">
         <img
           alt="menu"
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png"
@@ -43,12 +57,12 @@ const Head = () => {
           />
         </a>
       </div>
-      <div className="col-span-10 px-10">
+      <div className="">
         <div>
           <input
             type="text"
             placeholder="Search"
-            className="w-2/4 border border-gray-400 p-2 rounded-l-full"
+            className="w-[600px] border border-gray-400 p-2 rounded-l-full"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setShowSuggestions(true)}
@@ -62,14 +76,14 @@ const Head = () => {
           <ul>
             {showSuggestions &&
               suggestions.map((s) => (
-                <li className="py-2 px-3 shadow-sm hover:bg-slate-200" key={s}>
+                <li className="py-2 shadow-sm hover:bg-slate-200" key={s}>
                   {s}
                 </li>
               ))}
           </ul>
         </div>
       </div>
-      <div className="col-span-1">
+      <div className="">
         <img
           alt="user-icon"
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUuUpS75fQX8Z2F57l-Vdilx71TAAzJ1qZdzlj25g4eQ&s"

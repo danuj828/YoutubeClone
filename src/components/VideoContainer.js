@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { YOUTUBE_API } from "../Utils/Api";
-import VideoCard, { AdVideocard } from "./VideoCard";
+import VideoCard from "./VideoCard";
 import { Link } from "react-router-dom";
 
 const VideoContainer = () => {
@@ -17,8 +17,7 @@ const VideoContainer = () => {
   };
 
   return (
-    <div className="flex flex-wrap gap-2">
-      {videos[0] && <AdVideocard info={videos[0]} />}
+    <div className="flex flex-wrap gap-2 justify-start">
       {videos.map((video) => (
         <Link to={"/watch?v=" + video.id} key={video.id}>
           <VideoCard info={video} />
