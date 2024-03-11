@@ -10,3 +10,5 @@ export const YOUTUBE_COMMENTS =
 
 export const YOUTUBE_SEARCH_API =
   "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
+
+export const OFFSET_LIVE_CHAT_LIMIT = 10;
