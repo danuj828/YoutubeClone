@@ -9,24 +9,15 @@ const Sidebar = () => {
   return (
     <div className="shadow-lg w-40 p-5 ">
       <ul>
-        <li><Link to="/">Home</Link></li>
-        <li>Shorts</li>
-        <li>Videos</li>
-        <li>Live</li>
-      </ul>
-      <h1 className="pt-5 font-bold">Subscriptions</h1>
-      <ul>
-        <li>Music</li>
-        <li>Sports</li>
-        <li>Gaming</li>
-        <li>Movies</li>
-      </ul>
-      <h1 className="pt-5 font-bold">Watch Later</h1>
-      <ul>
-        <li>Music</li>
-        <li>Sports</li>
-        <li>Gaming</li>
-        <li>Movies</li>
+        <li className="font-bold text-lg py-1">
+          <Link to="/">Home</Link>
+        </li>
+        <li className="font-bold text-lg py-2">Subscriptions</li>
+        <li className="font-bold text-lg py-2">Library</li>
+        <li className="font-bold text-lg py-2">History</li>
+        <li className="font-bold text-lg py-2">Your Videos</li>
+        <li className="font-bold text-lg py-2">Watch Later</li>
+        <li className="font-bold text-lg py-2">Liked Videos</li>
       </ul>
     </div>
   );
